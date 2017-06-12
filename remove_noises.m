@@ -1,3 +1,4 @@
+addpath('./Zernike_code/');
 % getting background
 v = VideoReader('depth-video.mp4');
 
@@ -15,9 +16,9 @@ v.CurrentTime = 0;
 jumuk_frame = readFrame(v) - background_frame;
 %imshow(jumuk_frame);
 
-% soccer time
+% scissor time
 v.CurrentTime = 19;
-soccer_frame = readFrame(v) - background_frame;
+scissor_frame = readFrame(v) - background_frame;
 %imshow(soccer_frame);
 
 % garoro time
@@ -30,7 +31,7 @@ v.CurrentTime = 59;
 hab_frame = readFrame(v) - background_frame;
 %imshow(hab_frame);
 
-img1 = bo_frame;
+img1 = hab_frame;
 img1 = img1(:,:,1); % Convert to single channel.
 img2 = imbinarize(img1, 0.1); % https://www.mathworks.com/help/images/ref/imbinarize.html
 img2 = bwareaopen(img2, 200); % https://www.mathworks.com/help/images/ref/bwareaopen.html
@@ -56,7 +57,8 @@ rotated_points = points * coeff;
 
 min_point = min(rotated_points);
 
-rotated_points = rotated_points - min_point;
+% rotated_points = rotated_points - min_point;
+rotated_points=bsxfun(@minus,rotated_points,min_point); % https://stackoverflow.com/questions/5967940/matlab-quickly-subtract-1xn-array-from-mxn-matrix-elements
 
 rotated_image_size = max(rotated_points);
 
