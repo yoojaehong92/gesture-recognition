@@ -7,7 +7,6 @@ set(gcf, 'Position', get(0,'Screensize'));
 template_list = {'normalized_image', 'scissor', 'jumuk', 'hab', 'garoro', 'bo'};
 
 % remove_noises % get normalized_image
-normalized_image = bwmorph(normalized_image,'skel',Inf);
 
 for i = 1:length(template_list)
     img = imread(template_list{i},'png');
